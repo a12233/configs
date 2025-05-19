@@ -1,0 +1,98 @@
+(defcfg
+process-unmapped-keys yes
+)
+
+(defvar
+tap-time 100       ;; Fast typist settings
+hold-time 180      ;; Fast typist settings
+quick-tap 150
+)
+
+;; Kinesis Advantage 360 Pro QWERTY layout
+(defsrc
+esc  F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  F11  F12  
+=    1    2    3    4    5                   6    7    8    9    0    -
+tab  q    w    e    r    t                   y    u    i    o    p    \
+caps a    s    d    f    g                   h    j    k    l    ;    '
+lsft z    x    c    v    b                   n    m    ,    .    /    rsft
+                                                              
+lctl lalt lmet                                              rmet ralt rctl
+           bspc del  end             home pgup pgdn ret  spc
+                grv  left rght            up   down [    ]
+)
+
+(deflayer default
+@etb _    _    _    _    _    _    _    _    _    _    _    _    
+_    _    _    _    _    _                   _    _    _    _    _    _
+@tbs _    _    _    _    _                   _    _    _    _    _    _
+@cec @a   @s   @d   @f   _                   _    @j   @k   @l   @semi _
+_    _    _    _    _    _                   _    _    _    _    _    _
+                                                              
+@lcm @fn  _                                             _    _    _
+           _    _    lalt                 grv  ralt  esc   _    @spc
+                @sym _    _               _    _    _    _
+)
+
+(deflayer arrows
+_    _    _    _    _    _    _    _    _    _    _    _    _    
+_    _    _    _    _    _                   _    _    _    _    _    _
+_    _    _    _    _    _                   _    _    _    _    _    _
+_    _    _    _    _    _                   left down up   rght _    _
+_    _    _    _    _    _                   _    _    _    _    _    _
+                                                              
+_    _    _                                             _    _    _
+           _    _    _                _    _    _    _    _
+                _    _    _               _    _    _    _
+)
+
+(deflayer symbols
+_    _    _    _    _    _    _    _    _    _    _    _    _    
+_    _    _    _    _    _                   _    _    _    _    _    _
+_    _    _    _    _    _                   _    S-8  S-9  S-0  _    _
+_    S-3  S-4  S-5  S-7  _                   _    [    ]    S-[  S-]  _
+_    _    _    _    _    _                   _    S-,  S-.  S-\ \    _
+                                                              
+_    _    _                                             _    _    _
+           _    _    _                _    _    _    _    _
+                _    _    _               _    _    _    _
+)
+
+(deflayer function
+_    brdn brup mctl _    _    _    prev pp   next mute vold volu 
+_    _    _    _    _    _                   _    _    _    _    _    _
+_    _    _    _    _    _                   _    _    _    _    _    _
+_    _    _    _    _    _                   _    _    _    _    _    _
+_    _    _    _    _    _                   _    _    _    _    _    _
+                                                              
+_    _    _                                             _    _    _
+           _    _    _                _    _    _    _    _
+                _    _    _               _    _    _    _
+)
+
+(defalias
+;; Escape as escape (tap) and control (hold)
+etb (tap-hold-release $tap-time $hold-time esc lctrl)
+;; Left Control as Command/Meta
+lcm lmet
+;; Caps Lock as Escape (tap) and Control (hold)
+cec \
+;; Tab as symbols layer when held
+tbs (tap-hold-release $tap-time $hold-time tab (layer-toggle symbols))
+;; Additional symbols toggle on grave key
+sym (tap-hold-release $tap-time $hold-time grv (layer-toggle symbols))
+;; Space as arrows layer when held
+spc (tap-hold $tap-time $hold-time spc (layer-toggle arrows))
+;; Left Alt as function layer when held
+fn (tap-hold-release $tap-time $hold-time lalt (layer-toggle function))
+;; Home row mods with tap-hold-release
+;; Left hand home row mods
+a (tap-hold $tap-time $hold-time a lalt)     ;; A key: a when tapped, Alt when held
+s (tap-hold $tap-time $hold-time s lctl)     ;; S key: s when tapped, Control when held
+d (tap-hold $tap-time $hold-time d lmet)     ;; D key: d when tapped, Command/Meta when held
+f (tap-hold $tap-time $hold-time f lsft)     ;; F key: f when tapped, Shift when held
+;; Right hand home row mods
+j (tap-hold-release $tap-time $hold-time j rsft)     ;; J key: j when tapped, Shift when held
+k (tap-hold-release $tap-time $hold-time k rmet)     ;; K key: k when tapped, Command/Meta when held
+l (tap-hold-release $tap-time $hold-time l rctl)     ;; L key: l when tapped, Control when held
+semi (tap-hold $tap-time $hold-time ; ralt)  ;; ; key: semicolon when tapped, Alt when held
+)
