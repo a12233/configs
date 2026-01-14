@@ -1,0 +1,31 @@
+;; Home Row Mods config
+;; Tap = letter, Hold = modifier
+;; Layout: Alt, Ctrl, Ctrl, Shift | Shift, Ctrl, Ctrl, Alt
+
+(defcfg
+  process-unmapped-keys yes
+)
+
+(defsrc
+  a    s    d    f    j    k    l    ;
+)
+
+(defvar
+  tap-time 200
+  hold-time 150
+)
+
+(defalias
+  a (tap-hold $tap-time $hold-time a lalt)
+  s (tap-hold $tap-time $hold-time s lctl)
+  d (tap-hold $tap-time $hold-time d lctl)
+  f (tap-hold $tap-time $hold-time f lsft)
+  j (tap-hold $tap-time $hold-time j rsft)
+  k (tap-hold $tap-time $hold-time k rctl)
+  l (tap-hold $tap-time $hold-time l rctl)
+  ; (tap-hold $tap-time $hold-time ; ralt)
+)
+
+(deflayer default
+  @a   @s   @d   @f   @j   @k   @l   @;
+)
